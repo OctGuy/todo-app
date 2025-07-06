@@ -1,4 +1,4 @@
-package com.example.todo_app;
+package com.octguy.todo_app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
