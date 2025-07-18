@@ -1,6 +1,7 @@
 package com.octguy.todo_app.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,6 +35,12 @@ public class GlobalExceptionHandler {
         
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorBody(errorMessage, HttpStatus.BAD_REQUEST));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleUnauthorized(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(errorBody(ex.getMessage(), HttpStatus.UNAUTHORIZED));
     }
 
     @ExceptionHandler(Exception.class)

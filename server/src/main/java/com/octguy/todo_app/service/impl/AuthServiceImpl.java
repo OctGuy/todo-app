@@ -2,7 +2,7 @@ package com.octguy.todo_app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.octguy.todo_app.dto.auth.LoginRequest;
@@ -24,8 +24,8 @@ public class AuthServiceImpl implements AuthService {
     private UserMapper userMapper;
 
     @Autowired
-    public PasswordEncoder passwordEncoder;
-
+    public BCryptPasswordEncoder passwordEncoder;
+    
     @Override
     public UserResponseDTO login(LoginRequest request) {
         // Find user by email
