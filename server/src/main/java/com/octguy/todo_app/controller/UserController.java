@@ -3,6 +3,7 @@ package com.octguy.todo_app.controller;
 import com.octguy.todo_app.dto.user.request.UserUpdateRequest;
 import com.octguy.todo_app.dto.user.response.UserResponseDto;
 import com.octguy.todo_app.entity.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserResponseDto>> updateUser(@PathVariable Integer id, @RequestBody UserUpdateRequest userUpdateRequest) {
+    public ResponseEntity<ApiResponse<UserResponseDto>> updateUser(@PathVariable Integer id, @Valid @RequestBody UserUpdateRequest userUpdateRequest) {
         UserResponseDto updatedUser = userService.updateUser(id, userUpdateRequest);
         ApiResponse<UserResponseDto> apiResponse = new ApiResponse<>(HttpStatus.OK, "User updated successfully", updatedUser, null);
         return ResponseEntity.ok(apiResponse);

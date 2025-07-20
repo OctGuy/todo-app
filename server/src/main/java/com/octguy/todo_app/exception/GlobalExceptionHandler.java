@@ -7,9 +7,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 
 @RestControllerAdvice
@@ -83,14 +80,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(apiResponse);
-    }
-
-    private Map<String, Object> errorBody(String message, HttpStatus status) {
-        return Map.of(
-            "timestamp", LocalDateTime.now(),
-            "status", status.value(),
-            "error", status.getReasonPhrase(),
-            "message", message
-        );
     }
 }
