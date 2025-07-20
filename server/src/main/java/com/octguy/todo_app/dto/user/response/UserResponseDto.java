@@ -1,6 +1,6 @@
 package com.octguy.todo_app.dto.user.response;
 
-public class UserResponseDTO {
+public class UserResponseDto {
 
     private Integer userId;
     private String username;
@@ -14,9 +14,9 @@ public class UserResponseDTO {
         this.userId = userId;
     }
 
-    public UserResponseDTO() {}
+    public UserResponseDto() {}
 
-    public UserResponseDTO(Integer userId, String username, String email) {
+    public UserResponseDto(Integer userId, String username, String email) {
         this.userId = userId;
         this.username = username;
         this.email = email;

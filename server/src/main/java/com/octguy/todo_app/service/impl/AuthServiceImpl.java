@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.octguy.todo_app.dto.auth.LoginRequest;
 import com.octguy.todo_app.dto.user.request.UserCreateRequest;
-import com.octguy.todo_app.dto.user.response.UserResponseDTO;
+import com.octguy.todo_app.dto.user.response.UserResponseDto;
 import com.octguy.todo_app.entity.User;
 import com.octguy.todo_app.exception.BadRequestException;
 import com.octguy.todo_app.mapper.UserMapper;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     public BCryptPasswordEncoder passwordEncoder;
     
     @Override
-    public UserResponseDTO login(LoginRequest request) {
+    public UserResponseDto login(LoginRequest request) {
         // Find user by email
         User user = userRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new BadCredentialsException("Invalid credentials"));
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserResponseDTO register(UserCreateRequest request) {
+    public UserResponseDto register(UserCreateRequest request) {
         // Check existing user by email
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("User with this email already exists");

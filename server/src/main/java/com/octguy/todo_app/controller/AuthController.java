@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.octguy.todo_app.dto.auth.LoginRequest;
 import com.octguy.todo_app.dto.user.request.UserCreateRequest;
-import com.octguy.todo_app.dto.user.response.UserResponseDTO;
+import com.octguy.todo_app.dto.user.response.UserResponseDto;
+import com.octguy.todo_app.entity.ApiResponse;
 import com.octguy.todo_app.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -23,15 +24,17 @@ public class AuthController {
     private AuthService authService;
     
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDTO> login(@Valid @RequestBody LoginRequest request) {
-        UserResponseDTO response = authService.login(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<UserResponseDto>> login(@Valid @RequestBody LoginRequest request) {
+        UserResponseDto response = authService.login(request);
+        ApiResponse<UserResponseDto> apiResponse = new ApiResponse<>(HttpStatus.OK, "Login successful", response, null);
+        return ResponseEntity.ok(apiResponse);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody UserCreateRequest request) {
-        UserResponseDTO response = authService.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<ApiResponse<UserResponseDto>> register(@Valid @RequestBody UserCreateRequest request) {
+        UserResponseDto response = authService.register(request);
+        ApiResponse<UserResponseDto> apiResponse = new ApiResponse<>(HttpStatus.CREATED, "User registered successfully", response, null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(apiResponse);
     }
 
 }
