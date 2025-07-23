@@ -1,8 +1,8 @@
 import './App.css'
-import Auth from './components/Auth'
+import AuthPage from './pages/AuthPage'
 
 function App() {
-  return <Auth />
+  return <AuthPage />
 }
 
 export default App

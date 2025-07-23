@@ -1,20 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
+import type { LoginRequest } from '../../api/authApi';
+import authApi from '../../api/authApi';
+import { AxiosError } from 'axios';
 
-interface LoginFormProps {
-  formData: {
-    email: string;
-    password: string;
-  };
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent) => void;
-}
+// interface LoginFormProps {
+//   formData: LoginRequest;
+//   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//   onSubmit: (e: React.FormEvent) => void;
+// }
   
-const LoginForm: React.FC<LoginFormProps> = ({ formData, onInputChange, onSubmit }) => {
+const LoginForm: React.FC = () => {
+  const [formData, setFormData] = useState<LoginRequest>({
+    email: '',
+    password: ''
+  });
+
+  const [error, setError] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const res = await authApi.login(formData);
+      console.log('Login successful:', res.data.data);
+    }
+    catch (err: any) {
+      if (err.response) {
+        const ms = err.response.data;
+        console.error('Login error:', ms.message);
+      }
+      else {
+        console.error('Unknown error');
+      }
+    }
+  }
+  
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
+      {error && (
+        <div className="alert alert-danger" role="alert" style={{ borderRadius: '12px', fontSize: '0.9rem' }}>
+          {error}
+        </div>
+      )}
       <div className="mb-4">
         <label htmlFor="username" className="form-label text-start d-block fw-semibold text-primary">
-          <i className="bi bi-person-fill me-2"></i>Email
+          <i className="bi bi-person-fill me-2"></i>Username
         </label>
         <input
           type="text"
@@ -27,7 +65,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, onInputChange, onSubmit
           id="email"
           name="email"
           value={formData.email}
-          onChange={onInputChange}
+          onChange={handleInputChange}
           placeholder="Enter your email"
           required
         />
@@ -47,7 +85,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, onInputChange, onSubmit
           id="password"
           name="password"
           value={formData.password}
-          onChange={onInputChange}
+          onChange={handleInputChange}
           placeholder="Enter your password"
           required
         />
