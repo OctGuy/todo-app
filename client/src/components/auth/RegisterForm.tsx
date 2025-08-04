@@ -52,16 +52,6 @@ const RegisterForm: React.FC = () => {
     }
   };
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const error = validateField(name, value);
-
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: error
-    }));
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGeneralError(''); // Clear previous general error
@@ -115,7 +105,6 @@ const RegisterForm: React.FC = () => {
           id="username"
           name="username"
           value={formData.username}
-          onBlur={handleInputBlur}
           onChange={handleInputChange}
           placeholder="Enter your username"
           required
@@ -143,7 +132,6 @@ const RegisterForm: React.FC = () => {
           name="email"
           value={formData.email}
           onChange={handleInputChange}
-          onBlur={handleInputBlur}
           placeholder="Enter your email"
           required
         />
@@ -170,7 +158,6 @@ const RegisterForm: React.FC = () => {
           name="password"
           value={formData.password}
           onChange={handleInputChange}
-          onBlur={handleInputBlur}
           placeholder="Enter your password"
           required
         />
