@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginForm from '../components/auth/LoginForm';
 import RegisterForm from '../components/auth/RegisterForm';
-import ForgotPasswordForm from '../components/auth/ForgotPasswordForm';
 
 type AuthMode = 'login' | 'register' | 'forgot';
 
@@ -15,8 +14,6 @@ const AuthPage: React.FC = () => {
         return <LoginForm />;
       case 'register':
         return <RegisterForm />;
-      case 'forgot':
-        return <ForgotPasswordForm  />;
     }
   };
 
